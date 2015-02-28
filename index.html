@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content=“このサイトは、数独・ナンプレを自動計算するサイトです。パズル雑誌の答え合わせなどに使ってください。”>
+    <meta name="keyword" content=“数独,ナンプレ,答え,ソルバー,解法プログラム”>
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <title>【数独・ナンプレ】オンライン計算機 - atmarksharp.com</title>
+
+    <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/freelancer.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body id="page-top" class="index">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#page-top">【数独・ナンプレ】オンライン計算機</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="http://atmarksharp.com">http://atmarksharp.com</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <!-- Header -->
+    <header>
+        <div class="container" style="padding-top: 10em; padding-bottom: 2.5em;">
+            <div class="row">
+                <div class="col-lg-12">
+                    <img class="img-responsive" src="img/sudoku.png" alt="">
+                    <div class="intro-text">
+                        <span class="name" style="font-size: 32pt;">【数独・ナンプレ】オンライン計算機</span>
+                        <hr class="star-light">
+                        <span class="skills">オンラインで数独を自動計算します。もちろん無料。</span>
+                    </div>
+                      <!-- Ninja Matome Buttons -->
+                    <div class="row" style="margin-top: 2em; margin-bottom: 0; padding:0;">
+                        <div class="col-lg-12 text-center">
+                          <div class="ninja_onebutton" style="max-width: 530px; margin-left: auto; margin-right: auto;">
+                            <script type="text/javascript">
+                            //<![CDATA[
+                            (function(d){
+                            if(typeof(window.NINJA_CO_JP_ONETAG_BUTTON_2f68f36e35f1b4422aeb126a76b4e411)=='undefined'){
+                                document.write("<sc"+"ript type='text\/javascript' src='http:\/\/omt.shinobi.jp\/b\/2f68f36e35f1b4422aeb126a76b4e411'><\/sc"+"ript>");
+                            }else{
+                                window.NINJA_CO_JP_ONETAG_BUTTON_2f68f36e35f1b4422aeb126a76b4e411.ONETAGButton_Load();}
+                            })(document);
+                            //]]>
+                            </script><span class="ninja_onebutton_hidden" style="display:none;"></span><span style="display:none;" class="ninja_onebutton_hidden"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content Section -->
+    <section id="portfolio">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>SUDOKU SOLVER</h2>
+                    <hr class="star-primary">
+                    <div id="solver" style="font-size: 16pt">
+                      <p>
+                        縦横のサイズ(N)：
+                        <select name="sudoku-size" id="sudoku-size">
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                          <option value="12">12</option>
+                          <option value="14">14</option>
+                          <option value="15">15</option>
+                          <option value="16">16</option>
+                          <option value="18">18</option>
+                          <option value="20">20</option>
+                          <option value="21">21</option>
+                          <option value="22">22</option>
+                          <option value="24">24</option>
+                          <option value="25">25</option>
+                          <option value="30">30</option>
+                        </select>
+                        （N x N）
+                      </p>
+                      <p>
+                        各グループの縦横サイズ（太線で囲まれたボックス）：
+                        <select name="sudoku-group-size" id="sudoku-group-size">
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                        </select>
+                      </p>
+                      <p>
+                        セルの大きさ：<input id="cell-size" type="text" value="45" style="width:4em;"></input> px
+                      </p>
+                      <p>
+                        <button id="size-decide">決定</button> <p style="color:red;">警告：決定を押すと<strong>内容が消去</strong>されます</p>
+                      </p>
+
+                      <div id="sudoku-wrapper">
+                        <p>数値を入力して下さい（各セルをクリック）</p>
+                        <div id="sudoku">
+
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="success" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>About</h2>
+                    <hr class="star-light">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-lg-offset-2 text-center">
+                    <p>このサイトは、数独・ナンプレを自動計算するサイトです。<br>
+                    パズル雑誌の答え合わせなどに使ってください。</p>
+                </div>
+                <div style="margin-top: 2em;"></div>
+                <div class="col-lg-12 text-center">
+                  <h2>Source Code</h2>
+                  <hr class="star-light">
+                </div>
+                <div class="col-lg-4 text-center">
+                    <p>ソルバーのソースコードを配布しますので以下からダウンロードして下さい。<br>
+                    ライセンスはパブリックドメインで、著作権は放棄します。</p>
+                </div>
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <a href="#" class="btn btn-lg btn-outline">
+                        <i class="fa fa-download"></i> Download Source
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="footer-below">
+            <div class="container">
+                <div class="row">
+                  <div class="col-lg-4 text-center">
+                      <h3>Contact</h3>
+                      <p>&copy; 2015 Atmarksharp &ensp;&amp;&ensp; Fumiya Funatsu</p>
+                      <p><a href="http://atmarksharp.com">atmarksharp.com</a></p>
+                      Facebook:&ensp; <a href="https://www.facebook.com/atmarksharp">atmarksharp</a>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-top page-scroll visible-xs visble-sm">
+        <a class="btn btn-primary" href="#page-top">
+            <i class="fa fa-chevron-up"></i>
+        </a>
+    </div>
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="js/classie.js"></script>
+    <script src="js/cbpAnimatedHeader.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>
