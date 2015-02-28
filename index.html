@@ -106,48 +106,58 @@
                 <div class="col-lg-12 text-center">
                     <h2>SUDOKU SOLVER</h2>
                     <hr class="star-primary">
+
                     <div id="solver" style="font-size: 16pt">
-                      <p>
-                        縦横のサイズ(N)：
-                        <select name="sudoku-size" id="sudoku-size">
-                          <option value="9">9</option>
-                          <option value="10">10</option>
-                          <option value="12">12</option>
-                          <option value="14">14</option>
-                          <option value="15">15</option>
-                          <option value="16">16</option>
-                          <option value="18">18</option>
-                          <option value="20">20</option>
-                          <option value="21">21</option>
-                          <option value="22">22</option>
-                          <option value="24">24</option>
-                          <option value="25">25</option>
-                          <option value="30">30</option>
-                        </select>
-                        （N x N）
-                      </p>
-                      <p>
-                        各グループの縦横サイズ（太線で囲まれたボックス）：
-                        <select name="sudoku-group-size" id="sudoku-group-size">
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
-                          <option value="6">6</option>
-                        </select>
-                      </p>
-                      <p>
-                        セルの大きさ：<input id="cell-size" type="text" value="45" style="width:4em;"></input> px
-                      </p>
-                      <p>
-                        <button id="size-decide">決定</button> <p style="color:red;">警告：決定を押すと<strong>内容が消去</strong>されます</p>
-                      </p>
+                      <p><a href="#setting">設定変更</a>をするか、問題を入力して下さい（各セルをクリック）</p>
+                      <p>（<a href="javascript:setSudokuSample();">サンプル問題を表示</a>）</p>
 
                       <div id="sudoku-wrapper">
-                        <p>数値を入力して下さい（各セルをクリック）</p>
                         <div id="sudoku">
 
                         </div>
                       </div>
+                      <p style="margin-top: 2em;">
+                        <button id="sudoku-solve">答えを計算する</button>
+                      </p>
+
+                      <h3 id="setting" style="margin-bottom: 2em;">&nbsp;</h3>
+
+                      <div id="sudoku-setting">
+                        <p>
+                          縦横のサイズ(N)：
+                          <select name="sudoku-size" id="sudoku-size">
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="12">12</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="18">18</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="30">30</option>
+                          </select>
+                          （N x N）
+                        </p>
+                        <p>
+                          各グループの縦横サイズ（太線で囲まれたボックス）：
+                          <select name="sudoku-group-size" id="sudoku-group-size">
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                          </select>
+                        </p>
+                        <p>
+                          セルの大きさ：<input id="cell-size" type="text" value="45" style="width:4em;"></input> px
+                        </p>
+                        <p style="margin-top: 1em;">
+                          <button id="size-decide">設定変更</button> <p style="color:red;">警告：このボタンを押すと<strong>内容が消去</strong>されます</p>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -174,11 +184,15 @@
                 </div>
                 <div class="col-lg-4 text-center">
                     <p>ソルバーのソースコードを配布しますので以下からダウンロードして下さい。<br>
-                    ライセンスはパブリックドメインで、著作権は放棄します。</p>
+                    ライセンスはMITライセンスで、著作者はNathan Walkerです。</p>
                 </div>
                 <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <a href="#" class="btn btn-lg btn-outline">
-                        <i class="fa fa-download"></i> Download Source
+                    <a href="js/sudoku-solver.min.js" class="btn btn-lg btn-outline">
+                        <i class="fa fa-download"></i> Download "sudoku-solver.min.js"
+                    </a>
+                    <br>
+                    <a href="js/sudoku-solver.js" class="btn btn-lg btn-outline">
+                        <i class="fa fa-download"></i> Download "sudoku-solver.js"
                     </a>
                 </div>
             </div>
@@ -223,6 +237,7 @@
     <script src="js/jqBootstrapValidation.js"></script>
     <script src="js/contact_me.js"></script>
 
+    <script src="js/sudoku-solver.min.js"></script>
     <script src="js/script.js"></script>
 
 </body>
