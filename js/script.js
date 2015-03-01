@@ -71,7 +71,7 @@ jQuery(function($){
     $outer_table = $("<table class=\"sudoku-table\" cellspacing=\"0\" cellpadding=\"0\"></table>");
 
     var inner_count = parseInt(size/group_size);
-    console.log("inner_count: "+inner_count);
+    // console.log("inner_count: "+inner_count);
 
     var $inner_tr;
 
@@ -80,7 +80,7 @@ jQuery(function($){
       var table_y = parseInt(i/inner_count);
       var cell_text_size = cell_size - 4;
 
-      console.log("table-x: "+table_x+", table-y: "+table_y+"");
+      // console.log("table-x: "+table_x+", table-y: "+table_y+"");
 
       var $inner_table = $("<table class=\"sudoku-inner-table\" data-x=\""+table_x+"\" data-y=\""+table_y+"\" cellspacing=\"0\" cellpadding=\"0\"></table>");
 
@@ -140,6 +140,21 @@ jQuery(function($){
     window.setSudokuSample = setSudokuSample;
   }
 
+  function deleteQuestion(x,y,questions){
+    var id = null;
+    for (var i = 0; i < questions.length; i++) {
+      var e = questions[i];
+      if(e['x'] == x && e['y'] == y){
+        id = i;
+        break;
+      }
+    }
+
+    if(id !== null){
+      questions.splice(id, 1); // delete id
+    }
+  }
+
   function updateCallback(){
     $cell = $('.sudoku-cell');
 
@@ -147,12 +162,16 @@ jQuery(function($){
       var $this = $(this);
       var $text = $(this).find(".sudoku-cell-text");
 
-      var x = $this.attr("data-x");
-      var y = $this.attr("data-y");
-      var val = parseInt($text.val());
+      var x = parseInt($this.attr("data-x"));
+      var y = parseInt($this.attr("data-y"));
+      var val = $text.val();
 
-      questions.push({x:x, y:y, val:val});
-      console.log("x: "+x+", y: "+y+", val: "+val+"");
+      if(val === '' || val === null || val === NaN){
+        deleteQuestion(x,y,questions);
+      }else{
+        questions.push({x:x, y:y, val:parseInt(val)});
+        // console.log("x: "+x+", y: "+y+", val: "+val+"");
+      }
     });
   }
 
@@ -164,7 +183,7 @@ jQuery(function($){
     $outer_table = $("<table class=\"sudoku-table\" cellspacing=\"0\" cellpadding=\"0\"></table>");
 
     var inner_count = parseInt(size/group_size);
-    console.log("inner_count: "+inner_count);
+    // console.log("inner_count: "+inner_count);
 
     var $inner_tr;
 
@@ -173,7 +192,7 @@ jQuery(function($){
       var table_y = parseInt(i/inner_count);
       var cell_text_size = cell_size - 4;
 
-      console.log("table-x: "+table_x+", table-y: "+table_y+"");
+      // console.log("table-x: "+table_x+", table-y: "+table_y+"");
 
       var $inner_table = $("<table class=\"sudoku-inner-table\" data-x=\""+table_x+"\" data-y=\""+table_y+"\" cellspacing=\"0\" cellpadding=\"0\"></table>");
 
@@ -223,12 +242,13 @@ jQuery(function($){
       generateFinalResult();
       showResultData(answers);
 
+      window.scrollTo(0, 0);
       $('#popup').hide().fadeIn(600);
       $('#close-popup').click(function(){
         $('#popup').fadeOut(500);
       });
 
-      console.log("solved!");
+      console.log("[LOG] solved!");
     }
     solve_sudoku(questions, size, cell_size, solved); // in sudoku-solver.js
   });

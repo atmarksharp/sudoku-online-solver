@@ -6,6 +6,12 @@ function makeArray(size,value){
   return arr;
 }
 
+function couldNotSolve(){
+  console.log("[LOG] Could not solve");
+  alert("答えを出すことが出来ませんでした。\n（ヒント：問題のミスを確認して下さい）");
+  throw "Could not solve";
+}
+
 var div = function (a, b) {
   return (a - (a % b)) / b;
 };
@@ -27,7 +33,8 @@ function set_seq(x,y,v,size,seq){
 }
 
 
-// http://d.hatena.ne.jp/bellbind/20060713/1152794033
+// Core solver (edited by fumiya funatsu)
+// see http://d.hatena.ne.jp/bellbind/20060713/1152794033
 var solver = function (data, size, cell_size, callback, _group_size, _size_by_groups) {
   var pixel_size = size*size;
   var group_size = _group_size || Math.floor(size/cell_size);
@@ -95,27 +102,87 @@ function printSeq(seq, size){
   console.log("\n"+result);
 }
 
+var useIndexOf = 999;
+function findValue(arr,val){
+  if(useIndexOf === 999){
+    if(typeof [].indexOf == 'undefined'){
+      useIndexOf = false;
+    }else{
+      useIndexOf = true;
+    }
+  }
+
+  if(useIndexOf === true){
+    return arr.indexOf(val) > -1;
+  }else{
+    for (var i = 0; i < arr.length; i++) {
+      if(arr[i] === val){
+        return true;
+      }
+    }
+    return false;
+  }
+}
+
+
+function checkVertical(board,size){
+  var arr = [];
+
+  for (var x = 0; x < size; x++) {
+    for (var y = 0; y < size; y++) {
+      var v = get(x,y,board);
+      if(!(v <= size && v > 0)){
+        return false;
+      }
+      if(findValue(arr,v)){
+        return false;
+      }
+      arr.push(v);
+    }
+    arr = [];
+  }
+
+  return true;
+}
+
+function checkResult(board){
+  var size = board.length;
+  return checkVertical(board,size);
+}
+
+// Solveer entry function
 function solve_sudoku(questions, size, cell_size, callback){
   if(questions == null || questions.length == 0){
-    returnError();
+    couldNotSolve();
   }
   var seq = ques2Seq(questions, size);
   printSeq(seq, size);
 
+  var flag = false;
   solver(seq, size, cell_size, function(seq_data){
+    flag = true;
     var result = makeBoard(seq_data, size);
     printBoard(result);
-    callback(result);
+
+    if(checkResult(result)){
+      callback(result);
+    }else{
+      couldNotSolve();
+    }
   });
+
+  if(flag === false){
+    couldNotSolve();
+  }
 }
 
 function printBoard(board){
   var size = board.length;
-  const lines = makeArray(size,"-").join("") + "\n";
+  // const lines = makeArray(size,"-").join("") + "\n";
   var res = "\n";
   var values = [];
 
-  res += lines;
+  // res += lines;
 
   for (var y = 0; y < size; y++) {
     for (var x = 0; x < size; x++) {
@@ -124,10 +191,15 @@ function printBoard(board){
     }
 
     res += ("|" + values.join("|") + "|\n")
-    res += lines;
+    // res += lines;
   }
 
   console.log(res);
+}
+
+// for debug only
+function printQuestion(){
+  printSeq(ques2Seq(questions, size),size);
 }
 
 function ques2Seq(questions, size){
