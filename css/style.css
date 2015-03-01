@@ -17,12 +17,22 @@
 }
 
 #popup-result {
-
+  display: table;
+  margin: auto;
 }
 
 #popup {
+  display: table;
+  position: fixed;
+  width: 100%;
+  height: auto;
+  left: 0;
+  top: 0;
+  text-align: center;
   padding: 2em;
   background: #4aA98a;
+  z-index: 99999;
+  border-bottom: 8px solid black;
 }
 
 .sudoku-table {

@@ -26,7 +26,7 @@ jQuery(function($){
   }
 
   function setFinalResultValue(x,y,val){
-    var $target = $("#popup").find("[class='sudoku-cell'][data-x='"+x+"'][data-y='"+y+"']");
+    var $target = $('#popup').find(".sudoku-cell[data-x='"+x+"'][data-y='"+y+"']");
     var dx = $target.attr("data-x");
     var dy = $target.attr("data-y");
 
@@ -54,8 +54,6 @@ jQuery(function($){
   }
 
   function showResultData(map){
-    var size = map.length;
-
     for (var y = 0; y < size; y++) {
       var arr = map[y];
       for (var x = 0; x < size; x++) {
@@ -66,7 +64,8 @@ jQuery(function($){
   }
 
   function generateFinalResult(){
-    $('#popup').removeAttr("hidden");
+    $('#popup').css("display","table");
+
     var $popup_result = $('#popup-result');
     $popup_result.html("");
     $outer_table = $("<table class=\"sudoku-table\" cellspacing=\"0\" cellpadding=\"0\"></table>");
@@ -224,7 +223,10 @@ jQuery(function($){
       generateFinalResult();
       showResultData(answers);
 
-      $('#popup').bPopup();
+      $('#popup').hide().fadeIn(600);
+      $('#close-popup').click(function(){
+        $('#popup').fadeOut(500);
+      });
 
       console.log("solved!");
     }
