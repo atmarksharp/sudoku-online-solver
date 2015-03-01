@@ -143,8 +143,11 @@ jQuery(function($){
   });
 
   $solve_button.click(function(){
-    var result = solve_sudoku(questions); // in sudoku-solver.js
-    console.log(result);
+    function solved(answers){
+
+      console.log("solved!");
+    }
+    solve_sudoku(questions, size, cell_size, solved); // in sudoku-solver.js
   });
 
   generateSudoku();
