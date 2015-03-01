@@ -16,6 +16,15 @@
   border-radius: 10px;
 }
 
+#popup-result {
+
+}
+
+#popup {
+  padding: 2em;
+  background: #4aA98a;
+}
+
 .sudoku-table {
   border: 5px solid black;
 }
@@ -30,6 +39,7 @@
   border: 1px solid black;
   text-align: center;
   vertical-align: middle;
+  background: white;
 }
 
 .sudoku-cell-text {

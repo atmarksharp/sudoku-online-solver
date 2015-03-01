@@ -1,10 +1,7 @@
 function makeArray(size,value){
-  var val = value || null;
-  if(value === false){ val = false; }
-
   var arr = [];
   for (var i = 0; i < size; i++) {
-    arr.push(val);
+    arr.push(value);
   }
   return arr;
 }
@@ -107,8 +104,7 @@ function solve_sudoku(questions, size, cell_size, callback){
 
   solver(seq, size, cell_size, function(seq_data){
     var result = makeBoard(seq_data, size);
-    // printBoard(result);
-    showResult(result, cell_size);
+    printBoard(result);
     callback(result);
   });
 }
@@ -134,29 +130,6 @@ function printBoard(board){
   console.log(res);
 }
 
-function showResult(board, cell_size){
-  var size = board.length;
-  var lines = "";
-  var res = "\n";
-  var values = [];
-
-  res += lines;
-
-  for (var y = 0; y < size; y++) {
-    for (var x = 0; x < size; x++) {
-      var v = get(x,y,board) || 0;
-      values[x] = (v==0)? "_": v;
-    }
-
-    res += ((y+1) + ":  | " + values.join(" | ") + " |\n")
-    res += lines;
-  }
-
-  res = "計算結果：\n\n" + res;
-
-  alert(res);
-}
-
 function ques2Seq(questions, size){
   var seq = makeArray(size*size,0);
 
@@ -168,7 +141,9 @@ function ques2Seq(questions, size){
       var v = parseInt(e['val']);
       var pos = x + (size*y);
       // console.log("pos: "+pos+", x: "+x+", y: "+y+", val: "+v+"");
-      seq[pos] = v;
+      if(v != 0 && v != null){
+        seq[pos] = v;
+      }
     }
   }
 

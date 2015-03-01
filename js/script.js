@@ -16,13 +16,24 @@ jQuery(function($){
 
   function setValue(x,y,val){
     var $target = $("[class='sudoku-cell'][data-x='"+x+"'][data-y='"+y+"']");
-    var x = $target.attr("data-x");
-    var y = $target.attr("data-y");
+    var dx = $target.attr("data-x");
+    var dy = $target.attr("data-y");
 
-    console.log("setValue x: "+x+", y: "+y+"");
+    // console.log("setValue x: "+x+", y: "+y+"");
     $text = $target.find('.sudoku-cell-text');
     $text.val(val);
     questions.push({x:x, y:y, val:val});
+  }
+
+  function setFinalResultValue(x,y,val){
+    var $target = $("#popup").find("[class='sudoku-cell'][data-x='"+x+"'][data-y='"+y+"']");
+    var dx = $target.attr("data-x");
+    var dy = $target.attr("data-y");
+
+    // console.log("setValue x: "+x+", y: "+y+"");
+    $text = $target.find('.sudoku-cell-text');
+    $text.val(val);
+    // questions.push({x:x, y:y, val:val});
   }
 
   function setQuestionValue(map){
@@ -40,6 +51,72 @@ jQuery(function($){
         }
       }
     }
+  }
+
+  function showResultData(map){
+    var size = map.length;
+
+    for (var y = 0; y < size; y++) {
+      var arr = map[y];
+      for (var x = 0; x < size; x++) {
+        var v = arr[x];
+        setFinalResultValue(x,y,v);
+      }
+    }
+  }
+
+  function generateFinalResult(){
+    $('#popup').removeAttr("hidden");
+    var $popup_result = $('#popup-result');
+    $popup_result.html("");
+    $outer_table = $("<table class=\"sudoku-table\" cellspacing=\"0\" cellpadding=\"0\"></table>");
+
+    var inner_count = parseInt(size/group_size);
+    console.log("inner_count: "+inner_count);
+
+    var $inner_tr;
+
+    for(var i = 0; i<inner_count*inner_count; i++) {
+      var table_x = (i%inner_count);
+      var table_y = parseInt(i/inner_count);
+      var cell_text_size = cell_size - 4;
+
+      console.log("table-x: "+table_x+", table-y: "+table_y+"");
+
+      var $inner_table = $("<table class=\"sudoku-inner-table\" data-x=\""+table_x+"\" data-y=\""+table_y+"\" cellspacing=\"0\" cellpadding=\"0\"></table>");
+
+      for(var y = 0; y<group_size; y++) {
+        var $tr = $("<tr></tr>");
+
+        for(var x = 0; x<group_size; x++) {
+          var $cell = $(
+            "<td class=\"sudoku-cell popup-data\" data-x=\""+(table_x * group_size + x)+"\" data-y=\""+(table_y * group_size + y)+"\" style=\"width:"+cell_size+"px; height:"+cell_size+"px;\">" +
+            "<input type=\"text\" class=\"sudoku-cell-text\" style=\"font-size:"+(cell_text_size-10)+"px; width:"+cell_text_size+"px; height:"+cell_text_size+"px;\"/>" +
+            "</td>");
+
+          $tr.append($cell);
+        }
+
+        $inner_table.append($tr);
+      }
+
+      if(table_x == 0){
+        $inner_tr = $("<tr></tr>");
+      }
+
+
+      var $inner_td = $("<td></td>");
+      $inner_td.append($inner_table);
+      $inner_tr.append($inner_td);
+
+      if(table_x == inner_count-1){
+        $outer_table.append($inner_tr);
+      }
+    }
+
+    $popup_result.append($outer_table);
+
+    // updateCallback();
   }
 
   function setSudokuSample(){
@@ -144,6 +221,10 @@ jQuery(function($){
 
   $solve_button.click(function(){
     function solved(answers){
+      generateFinalResult();
+      showResultData(answers);
+
+      $('#popup').bPopup();
 
       console.log("solved!");
     }
