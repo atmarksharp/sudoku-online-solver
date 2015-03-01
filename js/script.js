@@ -21,7 +21,7 @@ jQuery(function($){
 
     // console.log("setValue x: "+x+", y: "+y+"");
     $text = $target.find('.sudoku-cell-text');
-    $text.val(val);
+    $text.val((val === 0)? " ": val);
     questions.push({x:x, y:y, val:val});
   }
 
@@ -32,7 +32,7 @@ jQuery(function($){
 
     // console.log("setValue x: "+x+", y: "+y+"");
     $text = $target.find('.sudoku-cell-text');
-    $text.val(val);
+    $text.val( val );
     // questions.push({x:x, y:y, val:val});
   }
 
@@ -48,6 +48,8 @@ jQuery(function($){
         var v = arr[x];
         if(v != '' && v != null && v > 0){
           setValue(x,y,v);
+        }else{
+          setValue(x,y,0);
         }
       }
     }
@@ -118,7 +120,24 @@ jQuery(function($){
     // updateCallback();
   }
 
-  function setSudokuSample(){
+  // debug command
+  function test(n){
+    sample(n);
+    $solve_button.click();
+  }
+
+  function sample(n){
+    switch (n) {
+      case 1:
+        sample1();
+        break;
+      case 2:
+        sample2();
+        break;
+    }
+  }
+
+  function sample1(){
     var map =
       [
         [_,_,_,_,5,7,4,3,_],
@@ -136,8 +155,28 @@ jQuery(function($){
     return false;
   }
 
+  function sample2(){
+    var map =
+      [
+        [_,_,2,_,9,7,5,1,_],
+        [6,7,9,5,8,_,_,2,_],
+        [4,_,_,_,_,_,9,_,_],
+        [5,3,6,_,_,_,_,7,2],
+        [_,_,_,1,7,6,_,_,_],
+        [1,4,_,_,_,_,8,6,9],
+        [_,_,3,_,_,_,_,_,4],
+        [_,2,_,_,6,4,7,5,8],
+        [_,5,4,7,2,_,6,_,_]
+      ];
+
+    setQuestionValue(map);
+    return false;
+  }
+
   if(typeof window != 'undefined'){
-    window.setSudokuSample = setSudokuSample;
+    window.sample1 = sample1;
+    window.sample2 = sample2;
+    window.test = test;
   }
 
   function deleteQuestion(x,y,questions){
