@@ -1,3 +1,5 @@
+// This is NOT used for now. but saved for considering algorithms.
+
 (function(G){
 	function returnError(){
 		throw "could not solved";
