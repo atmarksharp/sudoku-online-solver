@@ -203,13 +203,28 @@ jQuery(function($){
   }
 
   function generatePuzzle(mode){
-    fileInputClose();
+    spinner(true); // show spinner
+    setTimeout(function(){
 
-    var puzzle = sudoku.generate(mode);
-    var map = sudoku.generateMap(puzzle);
+      fileInputClose();
 
-    setQuestionValue(map);
+      var puzzle = sudoku.generate(mode);
+      var map = sudoku.generateMap(puzzle);
+
+      setQuestionValue(map);
+
+      spinner(false); // hide spinner
+    }, 500);
+
     return false;
+  }
+
+  function spinner(true_or_false){
+    if(true_or_false){
+      $('#spinner').show();
+    }else{
+      $('#spinner').hide();
+    }
   }
 
   function fileInputClose(mode){
@@ -383,22 +398,29 @@ jQuery(function($){
   });
 
   $solve_button.click(function(){
-    var puzzle = questionsToPuzzle(questions);
+    spinner(true); // show spinner
+    setTimeout(function(){
 
-    var answer = sudoku.solve(puzzle);
-    var map = sudoku.generateMap(answer);
-    // sudoku.print(answer);
+      var puzzle = questionsToPuzzle(questions);
 
-    generateFinalResult();
-    showResultData(map);
+      var answer = sudoku.solve(puzzle);
+      var map = sudoku.generateMap(answer);
+      // sudoku.print(answer);
 
-    window.scrollTo(0, 0);
-    $('#popup').hide().fadeIn(600);
-    $('#close-popup').click(function(){
-      $('#popup').fadeOut(500);
-    });
+      generateFinalResult();
+      showResultData(map);
 
-    console.log("[LOG] solved!");
+      window.scrollTo(0, 0);
+      $('#popup').hide().fadeIn(600);
+      $('#close-popup').click(function(){
+        $('#popup').fadeOut(500);
+      });
+
+      console.log("[LOG] solved!");
+
+      spinner(false); // hide spinner
+
+    }, 500);
   });
 
   generateSudoku();
