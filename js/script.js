@@ -242,6 +242,18 @@ jQuery(function($){
   }
 
   function exportFile(type){
+    var filename = prompt("ファイル名を指定して下さい (拡張子は除く):", "sudoku");
+    
+    if(filename === null){
+      return;
+    }else if(/[\/@#$%^&*\(\)+=\|\\;:'",?!<>`]/.test(filename)){
+      alert("【エラー】使える記号は '_' と '-' のみです");
+      return;
+    }else if(/(^[-])|([-]$)/.test(filename)){
+      alert("【エラー】先頭と終端には '-' は使えません。");
+      return;
+    }
+
     if(type === "csv"){
       var puzzle = questionsToPuzzle(questions);
       var map = sudoku.generateMap(puzzle);
@@ -260,12 +272,12 @@ jQuery(function($){
         csv += out.join(",") + "\n";
       };
 
-      submitPost("sudoku.csv",csv);
+      submitPost("download/"+filename+".csv",csv);
     }else if(type === "json"){
       var puzzle = questionsToPuzzle(questions);
       var json = JSON.stringify(puzzle);
 
-      submitPost("sudoku.json",json);
+      submitPost("download/"+filename+".json",json);
     }
   }
 
