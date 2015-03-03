@@ -284,11 +284,11 @@ jQuery(function($){
   }
 
   function showImportHelp(){
-    alert("【PC版のみ】このサイトの出力機能を使って出力した、ファイルのインポートができます。\n\nファイルを指定の場所にドラッグ&ドロップして下さい。");
+    alert("【PC版のみ】保存したファイルのインポートができます。\n\nファイルを指定の場所にドラッグ&ドロップして下さい。");
   }
 
   function showExportHelp(){
-    alert("マス目に入力した問題をファイルに出力できます。");
+    alert("入力した問題をファイルに保存できます。\n\"CSV\"はExcelなどで開くことができ、\"JSON\"はナンプレの問題表示によく使われる形式です。");
   }
 
   function fileInput(type){
