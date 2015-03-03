@@ -41,7 +41,7 @@ jQuery(function($){
       var code = $this.attr('data-href').replace(/^javascript:/,'');
       eval(code);
     });
-    
+
   }
 
   function xToCols(x){
@@ -284,7 +284,7 @@ jQuery(function($){
   }
 
   function showImportHelp(){
-    alert("このサイトの出力機能を使って出力した、ファイルのインポートができます。\n\nファイルを指定の場所にドラッグ&ドロップして下さい。");
+    alert("【PC版のみ】このサイトの出力機能を使って出力した、ファイルのインポートができます。\n\nファイルを指定の場所にドラッグ&ドロップして下さい。");
   }
 
   function showExportHelp(){
