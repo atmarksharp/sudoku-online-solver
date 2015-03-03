@@ -121,14 +121,14 @@
                       （ファイルから読み込み： <a href="javascript:fileInput('csv')">CSV</a>・<a href="javascript:fileInput('json')">JSON</a>&nbsp;&nbsp;[<a href="javascript:showImportHelp();">?</a>]）<br>
 
                       <div id="file-input" hidden>
-                        <p><input id="filetype" type="text" disabled></input></p>
-                        <p style="color: white; font-weight: bold; ">ここにコピペして下さい</p>
+                        <!-- <p>
+                            <input id="filetype" type="text" disabled></input>
+                        </p> -->
+                        <p style="color: white; font-weight: bold; ">ここにファイルをドラッグ&amp;ドロップして下さい</p>
                         <p>
-                            <a style="color:white; text-decoration: underline;" href="javascript:showImportHelp();">(書き方)</a>
+                            <a style="color:white; text-decoration: underline;" href="javascript:showImportHelp();">(ヘルプ)</a>
                         </p>
-                        <textarea id="external-data" cols="30" rows="10"></textarea>
                         <p>
-                            <button id="read-file" onclick="javascript:importFile()">読み込む</button>&nbsp;
                             <a id="file-input-close" href="javascript:fileInputClose('slideup')">閉じる</a>
                         </p>
                       </div>
@@ -268,6 +268,9 @@
     <script src="js/contact_me.js"></script>
 
     <script src="js/jquery.bpopup.min.js"></script>
+
+    <!-- CSV Parser -->
+    <script src="js/papaparse.min.js"></script>
 
     <script src="js/sudoku-js/sudoku.js"></script>
     <script src="js/script.js"></script>

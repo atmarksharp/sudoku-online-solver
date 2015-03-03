@@ -6,6 +6,7 @@ var questions = [];
 var answers = [];
 var _ = null; // for questions map
 
+
 jQuery(function($){
   $size = $('#sudoku-size');
   $cell_size = $('#cell-size');
@@ -13,6 +14,8 @@ jQuery(function($){
   $size_decide = $('#size-decide')
   $sudoku = $('#sudoku');
   $solve_button = $('#sudoku-solve');
+  $file_input = $('#file-input');
+  // $filetype = $('#filetype');
 
   function xToCols(x){
     switch (x){
@@ -236,7 +239,7 @@ jQuery(function($){
   }
 
   function showImportHelp(){
-    alert("このサイトの出力機能を使って出力した、ファイルのインポートができます。\n\nファイルを開いて、中身をそのまま貼り付けて下さい。");
+    alert("このサイトの出力機能を使って出力した、ファイルのインポートができます。\n\nファイルを指定の場所にドラッグ&ドロップして下さい。");
   }
 
   function showExportHelp(){
@@ -244,8 +247,12 @@ jQuery(function($){
   }
 
   function fileInput(type){
-    $("#filetype").val(type);
-    $('#file-input').hide().fadeIn(500).css('display','table');
+    if(typeof window.FileReader === 'undefined'){
+      alert('お使いのブラウザでは「ドラッグ&ドロップ機能」が使えません。\nブラウザを更新したり、別のブラウザをお使い下さい。\n（モバイル端末はサポートしていません）')
+    }
+
+    // $filetype.val(type);
+    $file_input.hide().fadeIn(500).css('display','table');
   }
 
   function submitPost(url,p){
@@ -296,9 +303,36 @@ jQuery(function($){
     }
   }
 
-  function importFile(){
-    var type = $('#filetype').val();
+  function importFile(type, str){
+    if(type === 'csv'){
+      var map = Papa.parse(str)['data'];
 
+      if(map.length > 9){
+        map = map.slice(0, 9);
+      }
+
+      for (var i = 0; i < 9; i++) {
+        for (var j = 0; j < 9; j++) {
+          if(map[i][j].trim() == ""){
+            map[i][j] = 0;
+          }else{
+            map[i][j] = parseInt(map[i][j]);
+          }
+        };
+      };
+
+      setQuestionValue(map);
+      fileInputClose();
+      return false;
+
+    }else if(type === 'json'){
+      var puzzle = JSON.parse(str);
+      var map = sudoku.generateMap(puzzle);
+      
+      setQuestionValue(map);
+      fileInputClose();
+      return false;
+    }
   }
 
   function deleteQuestion(x,y,questions){
@@ -389,6 +423,68 @@ jQuery(function($){
 
     updateCallback();
   }
+
+  function dragEffectOn($panel){
+    $panel.css('opacity','0.7');
+  }
+
+  function dragEffectOff($panel){
+    $panel.css('opacity','1');
+  }
+
+  var reader;
+  var dropFiletype;
+
+  if(window.FileReader !== 'undefined'){
+    reader = new FileReader();
+  }
+
+  reader.addEventListener('load', function(){
+    var text = reader.result;
+    importFile(dropFiletype, text);
+  });
+
+  $file_input.on('drop', function(e){
+    e.preventDefault();
+    dragEffectOff($file_input);
+
+    var $this = $(this);
+    var files = e.originalEvent.dataTransfer.files
+
+    if(files.length == 0){
+      return;
+    }else{
+      var file = files[0];
+
+      if(/csv/.test(file['type'])){
+        dropFiletype = 'csv';
+        reader.readAsText(file);
+        return;
+      }else if(/json|javascript/.test(file['type'])){
+        dropFiletype = 'json';
+        reader.readAsText(file);
+        return;
+      }else{
+        alert("CSVファイル、JSONファイル以外は読み込むことが出来ません");
+        return;
+      }
+    }
+  });
+
+  $file_input.on('dragover', function(e){
+    e.preventDefault();
+
+    var $this = $(this);
+    dragEffectOn($file_input);
+  });
+
+  $file_input.on('dragend dragleave', function(e){
+    e.preventDefault();
+
+    var $this = $(this);
+    dragEffectOff($file_input);
+  });
+
 
   $size_decide.click(function(){
     size = $size.val();
