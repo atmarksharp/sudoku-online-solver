@@ -1,0 +1,5 @@
+RewriteEngine On
+# RewriteBase /
+
+RewriteRule ^sudoku\.csv$ download-csv.php [QSA]
+RewriteRule ^sudoku\.json$ download-json.php [QSA]

@@ -35,6 +35,33 @@
   border-bottom: 8px solid black;
 }
 
+#file-input {
+  display: none;
+  max-width: 450px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1em;
+  padding: 20px;
+  border-radius: 10px;
+  background: #232e40;
+}
+
+#filetype {
+  width: 4em;
+  text-align: center;
+}
+
+#file-input-close {
+  color: white !important;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#external-data {
+  font-size: 10pt;
+  border: 2px solid black;  
+}
+
 .sudoku-table {
   border: 5px solid black;
 }

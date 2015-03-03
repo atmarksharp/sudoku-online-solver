@@ -63,10 +63,6 @@ function couldNotSolve(){
   throw "Could not solve";
 }
 
-var div = function (a, b) {
-  return (a - (a % b)) / b;
-};
-
 function get(x,y,board){
   return board[y][x];
 }
@@ -220,36 +216,66 @@ function shuffle(arr) {
 
 // TODO: This makes bugs
 
+var get_y = function (id, size) {
+  return (id - (id % size)) / size;
+  // same as Math.floor(id/size);
+};
+
+var get_x = function (id, size) {
+  return id % size;
+}
+
+var get_gx = function(x, group_size){
+  get_y(x, group_size);
+}
+
+var get_gy = function(i, triple_size){
+  get_y(i, triple_size);
+}
+
 var solver = function (data, size, cell_size, callback, _group_size, _size_by_groups) {
-  var pixel_size = size*size;
-  var group_size = _group_size || Math.floor(size/cell_size);
-  var size_by_groups = _size_by_groups || size/group_size;
+  var area_size = size*size;
+  var group_row_size = size*cell_size;
+  var returnflag = false;
+  var returnData;
+  // var size_by_groups = _size_by_groups || size/group_size;
 
   function impl(data){
-    for (var i = 0; i < pixel_size; i += 1) {
-      if (data[i] != 0) continue;
-      var t = makeArray(size+1, false);
-      var iDivOs = div(i, size);
-      var iModOs = i % size;
-      var iDivOsIs = div(i, size_by_groups);
-      var iModOsDivIs = div(i % size, group_size);
-      for (var j = 0; j < pixel_size; j += 1) {
-        if (div(j, size) == iDivOs ||
-            j % size == iModOs ||
-            (div(j, size_by_groups) == iDivOsIs && div(j % size, group_size) == iModOsDivIs)) {
+    for (var i = 0; i < area_size; i++) { // 各ピクセルについて（●）
+      if (data[i] != 0) continue; // セルの値が設定済みならスキップ
+      var t = makeArray(size+1, false); // size+1のfalseで埋めた配列を作成
+      var x = get_x(i,size); // 現在のx座標
+      var y = get_y(i,size); // 現在のy座標
+      var group_x = get_gx(x, cell_size); // ボックス自体（太線）のx座標
+      var group_y = get_gy(i, group_row_size); // ボックス自体（太線）のy座標
+
+      for (var j = 0; j < area_size; j++) { // ●に対する全ピクセルについて
+        var px = get_x(j, size);
+        var py = get_y(j, size);
+        var p_group_x = get_gx(px, cell_size);
+        var p_group_y = get_gy(j, group_row_size);
+
+        if (true
+            || py == y
+            || px == x
+            || (p_group_y == group_y && p_group_x == group_x))
+        {
           t[data[j]] = true;
         }
       };
-      for (var j = 1; j <= size; j += 1) {
-        if (t[j]) continue;
-        data[i] = j;
-        impl(data);
+      for (var j = 1; j <= size; j++) { // 各値について
+        if (t[j]) continue; // iとjが同じ位置ならばスキップ
+        data[i] = j; // i位置のピクセルの値をj（値）に設定
+        impl(data); // 同じことを繰り返す(★)
       }
-      data[i] = 0;
+
+      // ★の再帰から戻ったとき
+      data[i] = 0; // データを0に設定
       return;
     }
 
     callback(data);
+    return;
   }
 
   impl(data);
@@ -379,8 +405,8 @@ function solve_sudoku(questions, size, cell_size, callback){
   // var board = makeBoard(seq, size);
   printSeq(seq, size);
 
-  solver(seq, size, cell_size, function(seq){
-    var result = makeBoard(seq,size);
+  solver(seq, size, cell_size, function(res_seq){
+    var result = makeBoard(res_seq,size);
     printBoard(result);
 
     if(checkResult(result)){

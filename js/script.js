@@ -14,6 +14,35 @@ jQuery(function($){
   $sudoku = $('#sudoku');
   $solve_button = $('#sudoku-solve');
 
+  function xToCols(x){
+    switch (x){
+      case 0: return 'A';
+      case 1: return 'B';
+      case 2: return 'C';
+      case 3: return 'D';
+      case 4: return 'E';
+      case 5: return 'F';
+      case 6: return 'G';
+      case 7: return 'H';
+      case 8: return 'I';
+    }
+  }
+
+  function questionsToPuzzle(questions){
+    var puzzle = {};
+    for (var i = 0; i < questions.length; i++) {
+      var data = questions[i];
+      var column = xToCols(data['x']);
+      var row = parseInt(data['y']) + 1;
+      var val = data['val'];
+
+      if(val !== 0 && val !== ''){
+        puzzle[column + row] = val;
+      }
+    }
+    return puzzle;
+  }
+
   function setValue(x,y,val){
     var $target = $("[class='sudoku-cell'][data-x='"+x+"'][data-y='"+y+"']");
     var dx = $target.attr("data-x");
@@ -173,10 +202,76 @@ jQuery(function($){
     return false;
   }
 
-  if(typeof window != 'undefined'){
-    window.sample1 = sample1;
-    window.sample2 = sample2;
-    window.test = test;
+  function generatePuzzle(mode){
+    fileInputClose();
+
+    var puzzle = sudoku.generate(mode);
+    var map = sudoku.generateMap(puzzle);
+
+    setQuestionValue(map);
+    return false;
+  }
+
+  function fileInputClose(mode){
+    if(typeof mode === "undefined"){
+      $('#file-input').hide();
+    }else if(mode === "slideup"){
+      $('#file-input').show().fadeOut(500);
+    }
+  }
+
+  function showImportHelp(){
+    alert("このサイトの出力機能を使って出力した、ファイルのインポートができます。\n\nファイルを開いて、中身をそのまま貼り付けて下さい。");
+  }
+
+  function showExportHelp(){
+    alert("マス目に入力した問題をファイルに出力できます。");
+  }
+
+  function fileInput(type){
+    $("#filetype").val(type);
+    $('#file-input').hide().fadeIn(500).css('display','table');
+  }
+
+  function submitPost(url,p){
+    var $form = $('<form/>', {method:"post", action:url});
+    var $textarea = $('<textarea hidden name="p">');
+    $textarea.val(p).appendTo($form);
+    $form.appendTo(document.body);
+    $form.submit();
+  }
+
+  function exportFile(type){
+    if(type === "csv"){
+      var puzzle = questionsToPuzzle(questions);
+      var map = sudoku.generateMap(puzzle);
+
+      var csv = "";
+      for (var y = 0; y < map.length; y++) {
+        var row = map[y]
+        var out = [];
+        for (var x = 0; x < row.length; x++) {
+          if(row[x] === 0 || row[x] === ''){
+            out[x] = '""';
+          }else{
+            out[x] = row[x];
+          }
+        };
+        csv += out.join(",") + "\n";
+      };
+
+      submitPost("sudoku.csv",csv);
+    }else if(type === "json"){
+      var puzzle = questionsToPuzzle(questions);
+      var json = JSON.stringify(puzzle);
+
+      submitPost("sudoku.json",json);
+    }
+  }
+
+  function importFile(){
+    var type = $('#filetype').val();
+
   }
 
   function deleteQuestion(x,y,questions){
@@ -254,7 +349,6 @@ jQuery(function($){
         $inner_tr = $("<tr></tr>");
       }
 
-
       var $inner_td = $("<td></td>");
       $inner_td.append($inner_table);
       $inner_tr.append($inner_td);
@@ -277,20 +371,36 @@ jQuery(function($){
   });
 
   $solve_button.click(function(){
-    function solved(answers){
-      generateFinalResult();
-      showResultData(answers);
+    var puzzle = questionsToPuzzle(questions);
 
-      window.scrollTo(0, 0);
-      $('#popup').hide().fadeIn(600);
-      $('#close-popup').click(function(){
-        $('#popup').fadeOut(500);
-      });
+    var answer = sudoku.solve(puzzle);
+    var map = sudoku.generateMap(answer);
+    // sudoku.print(answer);
 
-      console.log("[LOG] solved!");
-    }
-    solve_sudoku(questions, size, cell_size, solved); // in sudoku-solver.js
+    generateFinalResult();
+    showResultData(map);
+
+    window.scrollTo(0, 0);
+    $('#popup').hide().fadeIn(600);
+    $('#close-popup').click(function(){
+      $('#popup').fadeOut(500);
+    });
+
+    console.log("[LOG] solved!");
   });
 
   generateSudoku();
+
+  if(typeof window != 'undefined'){
+    window.sample1 = sample1;
+    window.sample2 = sample2;
+    window.test = test;
+    window.generatePuzzle = generatePuzzle;
+    window.fileInput = fileInput;
+    window.fileInputClose = fileInputClose;
+    window.showImportHelp = showImportHelp;
+    window.showExportHelp = showExportHelp;
+    window.exportFile = exportFile;
+    window.importFile = importFile;
+  }
 });
