@@ -205,6 +205,24 @@ jQuery(function($){
     return false;
   }
 
+  function clearAll(){
+    var map =
+      [
+        [_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_],
+        [_,_,_,_,_,_,_,_,_]
+      ];
+
+    setQuestionValue(map);
+    return false;
+  }
+
   function generatePuzzle(mode){
     spinner(true); // show spinner
     setTimeout(function(){
@@ -532,5 +550,6 @@ jQuery(function($){
     window.showExportHelp = showExportHelp;
     window.exportFile = exportFile;
     window.importFile = importFile;
+    window.clearAll = clearAll;
   }
 });
