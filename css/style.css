@@ -89,6 +89,14 @@ body {
   height: 100%;
 }
 
+.no-list-style {
+   list-style-position: inside;
+}
+
+.no-list-style li {
+  list-style: none;
+}
+
 .sudoku-table {
   border: 5px solid black;
 }

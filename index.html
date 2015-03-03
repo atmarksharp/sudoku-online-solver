@@ -43,7 +43,7 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-fixed-top" style="position: absolute !important;">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header page-scroll">
@@ -53,7 +53,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#page-top">【数独・ナンプレ】オンライン計算機</a>
+                <a class="navbar-brand" href="#page-top" style="font-size: 15pt;">【数独・ナンプレ】オンライン計算機</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -76,12 +76,12 @@
     <header>
         <div class="container" style="padding-top: 10em; padding-bottom: 2.5em;">
             <div class="row">
-                <div class="col-lg-12">
+                <div>
                     <img class="img-responsive" src="img/sudoku.png" alt="">
                     <div class="intro-text">
                         <span class="name" style="font-size: 32pt;">【数独・ナンプレ】オンライン計算機</span>
                         <hr class="star-light">
-                        <span class="skills">オンラインで数独を自動計算します。もちろん無料。</span>
+                        <span class="skills" style="font-size: 14.5pt;">オンラインで数独を自動計算します。もちろん無料。</span>
                     </div>
                       <!-- Ninja Matome Buttons -->
                     <div class="row" style="margin-top: 2em; margin-bottom: 0; padding:0;">
@@ -114,26 +114,26 @@
                     <hr class="star-primary">
 
                     <div id="solver" style="font-size: 16pt">
-                      <p><a href="#setting">設定変更</a>をするか、問題を入力して下さい（各セルをクリック）</p>
+                        
+                        <p style="font-size: 18pt;"><strong><u>問題を入力して下さい（各セルをクリック）</u></strong></p>
 
-                      <p>（デモを表示： <a href="javascript:generatePuzzle('easy');">初級</a>・<a href="javascript:generatePuzzle('medium');">中級</a>・<a href="javascript:generatePuzzle('hard');">上級</a>）<br>
+                        <ul style="text-align: left !important; max-width: 650px; display: table; margin-left: auto; margin-right: auto;">
+                            <li style="margin-bottom: 0;">デモを表示： <a href="javascript:generatePuzzle('easy');">初級</a>・<a href="javascript:generatePuzzle('medium');">中級</a>・<a href="javascript:generatePuzzle('hard');">上級</a></li>
 
-                      （ファイルから読み込み： <a href="javascript:fileInput('csv')">CSV</a>・<a href="javascript:fileInput('json')">JSON</a>&nbsp;&nbsp;[<a href="javascript:showImportHelp();">?</a>]）<br>
+                            <li>ファイルから読み込み： <a href="javascript:fileInput('csv')">CSV</a>・<a href="javascript:fileInput('json')">JSON</a>&nbsp;&nbsp;[<a href="javascript:showImportHelp();">?</a>]</li>
 
-                      <div id="file-input" hidden>
-                        <!-- <p>
-                            <input id="filetype" type="text" disabled></input>
-                        </p> -->
-                        <p style="color: white; font-weight: bold; ">ここにファイルをドラッグ&amp;ドロップして下さい</p>
-                        <p>
-                            <a style="color:white; text-decoration: underline;" href="javascript:showImportHelp();">(ヘルプ)</a>
-                        </p>
-                        <p>
-                            <a id="file-input-close" href="javascript:fileInputClose('slideup')">閉じる</a>
-                        </p>
-                      </div>
+                            <div id="file-input" hidden>
+                                <p style="color: white; font-weight: bold; ">ここにファイルをドラッグ&amp;ドロップして下さい</p>
+                                <p>
+                                    <a style="color:white; text-decoration: underline;" href="javascript:showImportHelp();">(ヘルプ)</a>
+                                </p>
+                                <p>
+                                    <a id="file-input-close" href="javascript:fileInputClose('slideup')">閉じる</a>
+                                </p>
+                            </div>
 
-                      （ファイルに保存： <a href="javascript:exportFile('csv')">CSV</a>・<a href="javascript:exportFile('json')">JSON</a>&nbsp;&nbsp;[<a href="javascript:showExportHelp();">?</a>]）</p>
+                            <li>ファイルに保存： <a href="javascript:exportFile('csv')">CSV</a>・<a href="javascript:exportFile('json')">JSON</a>&nbsp;&nbsp;[<a href="javascript:showExportHelp();">?</a>]</li>
+                        </ul>
 
 
                       <div id="sudoku-wrapper">
