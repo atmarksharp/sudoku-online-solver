@@ -125,21 +125,21 @@
                         <p style="font-size: 18pt;"><strong><u>問題を入力して下さい（各セルをクリック）</u></strong></p>
 
                         <ul style="text-align: left !important; max-width: 650px; display: table; margin-left: auto; margin-right: auto;">
-                            <li style="margin-bottom: 0;">デモを表示： <a href="javascript:generatePuzzle('easy');">初級</a>・<a href="javascript:generatePuzzle('medium');">中級</a>・<a href="javascript:generatePuzzle('hard');">上級</a></li>
+                            <li style="margin-bottom: 0;">デモを表示： <a class="command" href="javascript:sample1();">サンプル1</a>・<a class="command" href="javascript:sample2();">サンプル2</a></li>
 
-                            <li>ファイルから読み込み： <a href="javascript:fileInput('csv')">CSV</a>・<a href="javascript:fileInput('json')">JSON</a>&nbsp;&nbsp;[<a href="javascript:showImportHelp();">?</a>]</li>
+                            <li>ファイルから読み込み： <a class="command" href="javascript:fileInput('csv')">CSV</a>・<a class="command" href="javascript:fileInput('json')">JSON</a>&nbsp;&nbsp;[<a class="command" href="javascript:showImportHelp();">?</a>]</li>
 
                             <div id="file-input" style="text-align: center !important;" hidden>
                                 <p style="color: white; font-weight: bold; ">ここにファイルをドラッグ&amp;ドロップして下さい</p>
                                 <p>
-                                    <a style="color:white; text-decoration: underline;" href="javascript:showImportHelp();">(ヘルプ)</a>
+                                    <a style="color:white; text-decoration: underline;" class="command" href="javascript:showImportHelp();">(ヘルプ)</a>
                                 </p>
                                 <p>
-                                    <a id="file-input-close" href="javascript:fileInputClose('slideup')">閉じる</a>
+                                    <a id="file-input-close" class="command" href="javascript:fileInputClose('slideup')">閉じる</a>
                                 </p>
                             </div>
 
-                            <li>ファイルに保存： <a href="javascript:exportFile('csv')">CSV</a>・<a href="javascript:exportFile('json')">JSON</a>&nbsp;&nbsp;[<a href="javascript:showExportHelp();">?</a>]</li>
+                            <li>ファイルに保存： <a class="command" href="javascript:exportFile('csv')">CSV</a>・<a class="command" href="javascript:exportFile('json')">JSON</a>&nbsp;&nbsp;[<a class="command" href="javascript:showExportHelp();">?</a>]</li>
                         </ul>
 
 
@@ -151,7 +151,7 @@
                       <p style="margin-top: 1em;">
                         <button id="sudoku-solve">答えを表示する</button>
                         <div style="display: inline-block; margin-top: 0.2em;"></div>
-                        <a style="text-decoration: underline;" href="javascript:clearAll();">クリア</a>
+                        <a style="text-decoration: underline;" class="command" href="javascript:clearAll();">クリア</a>
                       </p>
 
                       <div id="sudoku-setting" style="margin-top: 2em;">

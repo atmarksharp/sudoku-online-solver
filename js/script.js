@@ -17,6 +17,33 @@ jQuery(function($){
   $file_input = $('#file-input');
   // $filetype = $('#filetype');
 
+  function isIE() {
+      var ua = window.navigator.userAgent;
+      var msie = ua.indexOf("MSIE ");
+      return (msie > 0);
+  }
+
+  // Fix javascript link for IE
+
+  if(isIE){
+
+    $('a.command').each(function(){
+      var $this = $(this);
+        $this.css('cursor','pointer');
+        $this.attr("data-href",$this.attr('href'));
+        $this.removeAttr("href");
+    });
+
+    $('a.command').click(function(e){
+      e.preventDefault();
+
+      var $this = $(this);
+      var code = $this.attr('data-href').replace(/^javascript:/,'');
+      eval(code);
+    });
+    
+  }
+
   function xToCols(x){
     switch (x){
       case 0: return 'A';
