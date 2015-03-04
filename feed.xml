@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>【数独・ナンプレ】オンライン計算機</title>
+  <link href="http://atmarksharp.com/s/sudoku-solver/"/>
+  <updated>2015-03-04T11:00:29Z</updated>
+  <author>
+    <name>atmarksharp</name>
+  </author>
+  <id>urn:uuid:6A992D55-29F4-59B4-4FEE-58C733255E89</id>
+
+  <entry>
+    <title>【数独・ナンプレ】オンライン計算機</title>
+    <link href="http://atmarksharp.com/s/sudoku-solver/index.html"/>
+        <content type="image/png" src="http://atmarksharp.com/s/sudoku-solver/main-image.png"/>
+    <updated>2015-03-04T11:00:29Z</updated>
+    <published>2015-03-04T11:00:29Z</published>
+    <summary><![CDATA[数独・ナンプレを自動計算するサイトです。問題をパソコンに保存したり、読込することができます。パズル雑誌の答え合わせなどに使ってください。]]></summary>
+    <id>urn:uuid:5D5FE56B-5E8E-B577-D1C8-4B062178A9B9</id>
+  </entry>
+</feed>
